@@ -1,11 +1,14 @@
 {
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "crypto-js": "^4.2.0",
+    "date-fns": "^3.2.0",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "randomstring": "^1.3.0"
   },
   "name": "tr",
   "version": "1.0.0",
