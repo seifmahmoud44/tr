@@ -18,6 +18,8 @@ mongoose.connect(db).then(() => {
 app.get("/", (req, res) => {
   res.json("wow");
 });
+
+// create user
 app.post("/api/v1/user", async (req, res) => {
   try {
     const { name, password, email } = req.body;
@@ -44,7 +46,7 @@ app.post("/api/v1/user", async (req, res) => {
   }
 });
 
-//
+//sign in
 
 app.post("/api/v1/signin", async (req, res) => {
   const { email, password } = req.body;
@@ -56,12 +58,30 @@ app.post("/api/v1/signin", async (req, res) => {
 
   // still valid
 
-  const findToken = await Token.findOne({ email });
+  // const findToken = await Token.findOne({ email });
+  // const remainDate = Date.now() - findToken.addin;
+  // console.log(format(remainDate, "dd"));
+  // if (format(remainDate, "dd") > 2) {
+  //   return res.status(401).send("token expired");
+  // }
+  // if (format(remainDate, "dd") < 2) {
+  //   const findToken = await Token.findOne({ email });
+  //   await findToken.updateOne({ addin: Date.now() });
+  // }
+  const TockenState = checkTokenValid(email);
+  if (TockenState) {
+    res.status(200).send("yes");
+  }
+});
+
+// authorization
+const checkTokenValid = async (mail) => {
+  const findToken = await Token.findOne({ mail });
   const remainDate = Date.now() - findToken.addin;
   console.log(format(remainDate, "dd"));
   if (format(remainDate, "dd") > 2) {
-    return res.status(401).send("token expired");
+    return true;
+  } else {
+    return false;
   }
-
-  res.status(200).send("yes");
-});
+};
